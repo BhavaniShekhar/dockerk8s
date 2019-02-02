@@ -1,6 +1,12 @@
-1. Can we have add/update control groups dynamically.
+These are the questions raised by the participants, We preserve the questions to give solution or fix in the up coming sessions.
+You can also send your questions in mail as well :  vybhavatechnologies@gmail.com
+
+1. Can we have add/update control groups dynamically? Prasad
 yes..throug docker update command
 
-2. Can we have docker server in windows and clinets in other machines
+2. Can we have docker server in windows and clinets in other machines? - Venkatkiran
 
-3. Can we allow connections from a particular subnet to docker
+3. Can we allow connections from a particular subnet to docker? - Satish
+
+4. Can we use RHEL7 Linux to install the Docker? What is the significance of /etc/docker/daemon.json?
+Fix: The daemon.json cannot be used, so we can ignore that file and restart the daemon in latest versions of RHEL. Other option is better use the centOS/7 version.
