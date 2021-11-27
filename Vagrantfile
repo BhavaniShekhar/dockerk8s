@@ -1,9 +1,14 @@
+# This is ruby script which will be creating Vagrant CentOS boxes
+# Initiated by Ram
+# Updated and reused by BhavaniShekhar
+# Check your system configuration accordingly you can allocate resources in line 10, 11
 
 Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: "echo Hello"
   
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "4096"
+    vb.cpus = 2
    end
 
   config.vm.define "dockerhost" do |dockerhost|
