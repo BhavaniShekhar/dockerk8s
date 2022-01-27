@@ -1,0 +1,67 @@
+## Cgroup for Memory limitations
+-----------------------------
+
+#Check the image list, speciallly tomcat image should be there
+docker images
+
+# create a tomcat container 
+docker run -d --name test1 tomcat
+
+# See the docker stat help
+
+# check the stat for tomcat container oberve the memory allocated, used
+docker stats --no-stream test1
+
+
+#Create new container using cgroup with limiting memory
+docker run -d --name cgroupsm1 --memory 200m tomcat
+docker container ls
+
+# Observe the memory alloted, used for new tomcat container
+docker stats --no-stream cgroupsm1
+
+## CGROUP commands
+systemd-cgls
+systemd-cgls -l
+systemd-cgls -a
+
+# Top cgroup
+ systemd-cgtop -t -n 1
+ systemd-cgtop -t 
+
+## CPU 
+
+Know about your CPU number of cores, CPU MHz, CPU(s), Architecture, Core(s) per socket
+
+lscpu
+docker run -d --name cgroupsc1 --cpus 0.1 tomcat
+docker run -d --name cgroupsc2 --cpus 0.3 tomcat
+
+# Check CPU utilization for these 2 containers
+docker stats --no-stream cgroupsc1 cgroupsc2
+ 
+ # Modify the cpu
+ docker stats --no-stream cgroupsc1
+docker update cgroupsc1 --cpus 0.2
+docker stats --no-stream cgroupsc1
+
+## Create containers with cpuset
+
+# Low priority
+docker run -d --name lowpri --cpuset-cpus=0 --cpu-shares=20 busybox md5sum /dev/urandom 
+
+#Observer CPU%
+ docker stats --no-stream  lowpri
+
+# High priority
+docker run -d --name hipri --cpuset-cpus=0 --cpu-shares=80 busybox md5sum /dev/urandom 
+docker stats --no-stream  hipri
+docker stats --no-stream  hipri lowpri
+
+Check the priorities of process  now 
+top 
+
+# cleanup containers 
+docker rm -f -v lowpri hipri
+ docker rm -f -v lowpri hipri
+
