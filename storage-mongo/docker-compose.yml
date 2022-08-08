@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  # Mongo DB service
+  mongodb01:
+    image: mongo:latest # use the latest mongo DB image.
+    container_name: mongodb01
+    restart: unless-stopped
+    environment: # set required env variables to access mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: vybhava123
+    ports:
+      - 27017:27017
+    # Run without below volume first usecase, use it second usecase, after this destroy both containers see data path in host
+    volumes: # optional to preserve database after container is deleted. 
+      - ./mongodb-data:/data/db
+  
+  # Mongo Express as web Service
+  mongo-express-web:
+    image: mongo-express:latest # latest Mongo-Express image
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081 # Check this port occupied by other services if yes change left-side value
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: vybhava123
+      ME_CONFIG_MONGODB_SERVER: mongodb01 
+      # use the name of the mongo container above for server env var.
+      # In our case this is mongodb
