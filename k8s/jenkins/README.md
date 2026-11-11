@@ -47,3 +47,4 @@ Get the initial admin password:
 ```bash
 kubectl -n jenkins exec jenkins-0 -- cat /var/jenkins_home/secrets/initialAdminPassword
 ```
+Data lives on one node, so if that node fails, Jenkins can’t be rescheduled elsewhere until the disk is available again. That’s fine for a lab, but for production use a network-backed storage class (EBS, Ceph, NFS with care) and back up JENKINS_HOME.
