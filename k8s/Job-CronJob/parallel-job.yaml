@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parallel-task
+spec:
+  completions: 10
+  parallelism: 3
+  backoffLimit: 4
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: worker
+          image: busybox:1.37.0
+          command:
+            - sh
+            - -c
+            - echo Processing task; sleep 10
